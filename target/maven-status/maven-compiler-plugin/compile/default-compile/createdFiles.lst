@@ -1,0 +1,8 @@
+CSVReader\Main.class
+Database\DatabaseConnectionMariaDB.class
+Database\DatabaseConnectionSQlite.class
+General\ConfigReader.class
+Database\Main.class
+CSVReader\CSVReader.class
+Database\DatabaseConnection.class
+CSVReader\TestResults.class
