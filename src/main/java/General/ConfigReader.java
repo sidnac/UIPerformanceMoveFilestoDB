@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ConfigReader {    
 	
-	 private static Properties properties = new Properties();
+	 public static Properties properties = new Properties();
 
 	    static {
 	        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties")) {
@@ -19,11 +19,5 @@ public class ConfigReader {
 	        }
 	    }
 
-	    public static String getCSVFolder() {
-	        return properties.getProperty("CSVFolder");
-	    }
-
-	    public static String getDBFolder() {
-	        return properties.getProperty("DBFolder");
-	    }
+	    
 }

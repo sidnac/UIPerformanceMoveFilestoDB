@@ -7,11 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import CSVReader.TestResults;
+import General.ConfigReader;
 
 public class DatabaseConnectionMariaDB implements DatabaseConnection{
-private static final String MARIADB_URL = "jdbc:mariadb://57.56.8.10:3306/datsfit";
-private static final String USER = "datsfit";
-private static final String PASSWORD = "Bath325-EXPA";
+private static final String MARIADB_URL = ConfigReader.properties.getProperty("MARIADB_URL");
+private static final String USER = ConfigReader.properties.getProperty("MARIADB_USER");
+private static final String PASSWORD = ConfigReader.properties.getProperty("MARIADB_PASSWORD");
 
 @Override
 public Connection connect() {

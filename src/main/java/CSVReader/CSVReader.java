@@ -30,7 +30,7 @@ public class CSVReader {
 
 	public static List<String> getFiles(){
 		
-		String folderPath = ConfigReader.getCSVFolder(); 
+		String folderPath = ConfigReader.properties.getProperty("CSVFolder"); 
 		List<String> filePaths = new ArrayList<>();
 		
 		File folder = new File(folderPath);

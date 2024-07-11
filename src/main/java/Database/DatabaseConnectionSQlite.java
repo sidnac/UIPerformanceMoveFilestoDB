@@ -11,7 +11,7 @@ import General.ConfigReader;
 
 public class DatabaseConnectionSQlite implements DatabaseConnection{
 	
-    private static final String URL = "jdbc:sqlite:"+ConfigReader.getDBFolder() ;
+    private static final String URL = "jdbc:sqlite:"+ConfigReader.properties.getProperty("DBFolder");
     
     @Override
     public Connection connect() {

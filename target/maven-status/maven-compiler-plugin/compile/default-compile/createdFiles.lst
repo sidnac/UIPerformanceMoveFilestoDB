@@ -1,5 +1,7 @@
 CSVReader\Main.class
 Database\DatabaseConnectionMariaDB.class
+Query\Query.class
+Query\Main.class
 Database\DatabaseConnectionSQlite.class
 General\ConfigReader.class
 Database\Main.class
