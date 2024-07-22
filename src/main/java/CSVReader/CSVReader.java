@@ -6,17 +6,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import Database.DatabaseConnection;
-import Database.DatabaseConnectionSQlite;
 import General.ConfigReader;
 
 public class CSVReader {
@@ -47,11 +46,16 @@ public class CSVReader {
 	private static List<TestResults> readFile(String filePath) {
 		
 		List<String> lines = new ArrayList<String>();
+		List<String> errorLines = new ArrayList<String>();
 		 try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 			 lines = br.lines()
 			 .skip(1)		 
 			 .filter(line -> !line.contains("Exception"))
 	         .collect(Collectors.toList());
+			 errorLines = br.lines()
+					 .filter(line -> line.contains("Exception"))
+					 .collect(Collectors.toList());
+			
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }catch (NullPointerException e) {
@@ -59,7 +63,13 @@ public class CSVReader {
 	            System.err.println("File is empty or cannot be read.");
 	        }
 			
-		 
+		 	// write error lines into log file.
+		 	try {
+				writeErrorLinesToLog(errorLines);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		 
 		 	// List<TestResultObjects>
 			List<TestResults> list =  new ArrayList<TestResults>();
@@ -82,6 +92,27 @@ public class CSVReader {
 			return list;
 		 
 	}
+
+	private static void writeErrorLinesToLog(List<String> errorLines) throws IOException {
+		String fileLocation= "c:\\Users\\u785672\\OneDrive - Lufthansa Group\\RMA\\REPORTS\\log\\error.log";
+		File file = new File(fileLocation);
+		if(!file.exists()) {
+			file.createNewFile();		 		
+		}
+		trimLogFile(file,10000);
+		
+		Files.write(file.toPath(), errorLines, StandardOpenOption.APPEND);
+	}
+	
+	  private  static void trimLogFile(File file, int maxLines) throws IOException {
+	       
+
+	        List<String> lines = Files.readAllLines(file.toPath());
+	        if (lines.size() > maxLines) {
+	            List<String> lastLines = lines.subList(lines.size() - maxLines, lines.size());
+	            Files.write(file.toPath(), lastLines);
+	        }
+	    }
 
 	private static TestResults createTestResultObjects(String line) {
 		

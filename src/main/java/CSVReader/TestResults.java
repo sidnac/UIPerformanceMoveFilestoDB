@@ -38,7 +38,7 @@ public class TestResults {
 	}
 	
 	
-	public static Date parseDate(String dateStr) {
+	public Date parseDate(String dateStr) {
         
 		String[] dateFormats = { "MM/dd/yyyy", "yyyy-MM-dd" }; // Add more formats as needed
         for (String format : dateFormats) {
