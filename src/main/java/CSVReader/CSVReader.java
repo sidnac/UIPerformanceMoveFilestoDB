@@ -48,15 +48,28 @@ public class CSVReader {
 		List<String> lines = new ArrayList<String>();
 		List<String> errorLines = new ArrayList<String>();
 		 try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-			 lines = br.lines()
+			 
+			 // Read all lines into a list first
+	         List<String> allLines = br.lines().collect(Collectors.toList());
+			 
+			 lines = allLines
+			 .stream()		 
 			 .skip(1)		 
 			 .filter(line -> !line.contains("Exception"))
 	         .collect(Collectors.toList());
-			 errorLines = br.lines()
+			 
+			 
+			 
+			 
+			 errorLines = allLines
+					 .stream()
 					 .filter(line -> line.contains("Exception"))
 					 .collect(Collectors.toList());
 			
-	        } catch (IOException e) {
+			 
+		 
+		 
+		 } catch (IOException e) {
 	            e.printStackTrace();
 	        }catch (NullPointerException e) {
 	            // Handle case where br.lines() returns null (file is empty or not readable)
